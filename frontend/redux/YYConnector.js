@@ -11,9 +11,9 @@ function mapStateToProps(storeState, props) {
     return storeState
 }
 
-function mapDispatchToProps(dispatch) {gn
+function mapDispatchToProps(dispatch) {
     return {
-        yyActions: bindActionCreators(yyActionCreators, dispatch)
+        yyActions: bindActionCreators(yyActionCreators, dispatch),
     };
 }
 
