@@ -5,7 +5,10 @@ import {createStore} from 'redux';
 
 import YYConnector from './redux/YYConnector';
 import YYReducer from './redux/YYReducer';
-import {fetchInitialData} from './YYApi';
+import {
+    fetchInitialData,
+    getAutocompleteSuggestion,
+} from './YYApi';
 
 
 function renderYumYum(data) {
@@ -31,5 +34,9 @@ function renderYumYum(data) {
     render(ui, document.getElementById('root'));
 
 }
+
+getAutocompleteSuggestion("house of pancak").then( (res) =>
+    console.log(res)
+)
 
 fetchInitialData().then(renderYumYum);

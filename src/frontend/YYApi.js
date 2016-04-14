@@ -1,5 +1,6 @@
 const API_BASE = "/api"
 const INITIAL_API_ENDPOINT = "/startup"
+const AUTOCOMPETE_ENDPOINT = "/autocomplete"
 
 const JSON_HEADERS = {
     'Accept': 'application/json',
@@ -25,10 +26,16 @@ function post(url, query = {}, data = {}) {
         method: 'post',
         headers: JSON_HEADERS,
         body: JSON.stringify(data)
-    }).then(parseJSON)
+    }).then(parseJSON);
 }
 
 export function fetchInitialData() {
-    const url = `${API_BASE}${INITIAL_API_ENDPOINT}`
-    return post(url)
+    const url = `${API_BASE}${INITIAL_API_ENDPOINT}`;
+    return post(url);
+}
+
+export function getAutocompleteSuggestion(text_entered) {
+    const url = `${API_BASE}${AUTOCOMPETE_ENDPOINT}`;
+    const data = {input: text_entered};
+    return post(url, {}, data);
 }
