@@ -5,10 +5,12 @@ import {createStore} from 'redux';
 
 import YYConnector from './redux/YYConnector';
 import YYReducer from './redux/YYReducer';
-// import {fetchInitialData} from './YYApi';
+import {fetchInitialData} from './YYApi';
 
 
 function renderYumYum(data) {
+
+    console.log(data);
 
     const YYStore = createStore(YYReducer);
 
@@ -32,8 +34,8 @@ function renderYumYum(data) {
 
 }
 
-renderYumYum({});
+// renderYumYum({});
 
-// fetchInitialData().then(renderYumYum);
+fetchInitialData().then(renderYumYum);
 
 // renderYumYum();

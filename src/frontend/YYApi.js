@@ -29,6 +29,6 @@ function post(url, query = {}, data = {}) {
 }
 
 export function fetchInitialData() {
-    url = `${API_BASE}${INITIAL_API_ENDPOINT}`
+    const url = `${API_BASE}${INITIAL_API_ENDPOINT}`
     return post(url)
 }
