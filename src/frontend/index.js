@@ -10,8 +10,6 @@ import {fetchInitialData} from './YYApi';
 
 function renderYumYum(data) {
 
-    console.log(data);
-
     const YYStore = createStore(YYReducer);
 
     YYStore.dispatch({
@@ -34,8 +32,4 @@ function renderYumYum(data) {
 
 }
 
-// renderYumYum({});
-
 fetchInitialData().then(renderYumYum);
-
-// renderYumYum();
