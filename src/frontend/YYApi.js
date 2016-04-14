@@ -26,6 +26,7 @@ function post(url, query = {}, data = {}) {
         headers: JSON_HEADERS,
         body: JSON.stringify(data)
     }).then(parseJSON)
+}
 
 export function fetchInitialData() {
     url = `${API_BASE}${INITIAL_API_ENDPOINT}`

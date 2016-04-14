@@ -1,31 +1,39 @@
 import {render} from 'react-dom';
-import {Provider} from 'react-redux';
+// import {Provider} from 'react-redux';
 
-import YYConnector from './redux/YYConnector';
-import {fetchInitialData} from './YYApi';
+// import YYConnector from './redux/YYConnector';
+// import {fetchInitialData} from './YYApi';
 
-function renderYumYum(data) {
+render(
+    <h1>Hello, world!</h1>, document.getElementById('root')
+);
 
-    const YYStore = createStore(YYReducers);
+// function renderYumYum(data) {
 
-    YYStore.dispatch({
-        type: 'INITIAL_PAGE_LOAD',
-        payload: data,
-    });
+    // const YYStore = createStore(YYReducers);
 
-    const ui = (
-        <Provider store={YYStore}>
-            <div style={{
-                display: 'flex',
-                height: '100%',
-            }}>
-                <YYConnector hotelSearchId={res.search.search_token} />
-            </div>
-        </Provider>
-    );
+    // YYStore.dispatch({
+    //     type: 'INITIAL_PAGE_LOAD',
+    //     payload: data,
+    // });
 
-    render(ui, document.getElementById('root'));
+    // const ui = (
+    //     <Provider store={YYStore}>
+    //         <div style={{
+    //             display: 'flex',
+    //             height: '100%',
+    //         }}>
+    //             <YYConnector hotelSearchId={res.search.search_token} />
+    //         </div>
+    //     </Provider>
+    // );
 
-}
 
-fetchInitialData().then(renderYumYum);
+
+//     render(ui, document.getElementById('root'));
+
+// }
+
+// fetchInitialData().then(renderYumYum);
+
+// renderYumYum();
