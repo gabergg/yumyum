@@ -6,9 +6,7 @@ import YumYum from '../components/YumYum';
 
 
 function mapStateToProps(storeState, props) {
-
-    // do whatever manipulation
-    return storeState
+    return {}
 }
 
 function mapDispatchToProps(dispatch) {

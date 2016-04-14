@@ -1,9 +1,9 @@
-import {Component, PropTypes} from React;
+import React, {Component, PropTypes} from 'react';
 
 import YYBodyContainer from './YYBodyContainer'
 
 
-module.exports = class YumYum extends Component {
+class YumYum extends Component {
 
     static propTypes = {
         authors: PropTypes.array.required
@@ -15,3 +15,5 @@ module.exports = class YumYum extends Component {
         );
     }
 }
+
+export default YumYum;

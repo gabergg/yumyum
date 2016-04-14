@@ -1,8 +1,8 @@
-import {Component, PropTypes} from React;
+import React, {Component, PropTypes} from 'react';
 
 import RatingForm from './RatingForm'
 
-module.exports = class YYBodyContainer extends Component {
+class YYBodyContainer extends Component {
 
     static propTypes = {
         authors: PropTypes.array.required
@@ -14,3 +14,5 @@ module.exports = class YYBodyContainer extends Component {
         );
     }
 }
+
+export default YYBodyContainer;

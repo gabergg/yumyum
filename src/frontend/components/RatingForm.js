@@ -1,7 +1,7 @@
-import {Component, PropTypes} from React;
+import React, {Component, PropTypes} from 'react';
 
 //let's use flex-box
-Styles = {
+const Styles = {
     form: {
         width: '150px',
         height: '500px',
@@ -9,7 +9,7 @@ Styles = {
     },
 }
 
-module.exports = class RatingForm extends Component {
+class RatingForm extends Component {
 
     static propTypes = {
         authors: PropTypes.array.required
@@ -17,7 +17,7 @@ module.exports = class RatingForm extends Component {
 
     render() {
         return (
-            <div style={Styles.form>
+            <div style={Styles.form}>
                 <input/> //author
                 <input/> //rating
                 <input/> //description
@@ -26,3 +26,5 @@ module.exports = class RatingForm extends Component {
         );
     }
 }
+
+export default RatingForm;
