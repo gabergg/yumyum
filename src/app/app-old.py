@@ -1,10 +1,10 @@
 # from models import Spot
-from flask import render_template
+# from flask import render_template
 
 
-@app.route('/', methods=['GET'])
-def index():
-    return render_template('index.html')
+# @app.route('/', methods=['GET'])
+# def index():
+#     return render_template('index.html')
 
 # @app.route('/api/spot', methods=['POST'])
 # def create_or_update_rating(data):

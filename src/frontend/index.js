@@ -1,11 +1,13 @@
 import {render} from 'react-dom';
+import React from 'react';
+import Simple from './components/Simple';
 // import {Provider} from 'react-redux';
 
 // import YYConnector from './redux/YYConnector';
 // import {fetchInitialData} from './YYApi';
 
 render(
-    <h1>Hello, world!</h1>, document.getElementById('root')
+    <Simple/>, document.getElementById('root')
 );
 
 // function renderYumYum(data) {
