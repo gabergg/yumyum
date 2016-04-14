@@ -5,18 +5,14 @@
   "main": "./lib/index.js",
   "scripts": {
     "build": "babel src --out-dir lib",
-    "watch": "npm run build -- --watch",
+    "watch": "npm run build -- --watch"
   },
   "author": "Gabe G'Sell <gabergg@gmail.com> (http://github.com/gabergg)",
-  "peerDependencies": {
-    "react": "^0.14"
-  },
   "dependencies": {
-    "lodash": "4.6.1",
+    "lodash": "4.6.1"
   },
   "devDependencies": {
-    "babel-cli": "6.6.4",
-    "babel-eslint": "6.0.0",
+    "babel-cli": "^6.0.0",
     "babel-loader": "6.2.4",
     "babel-plugin-transform-class-properties": "6.6.0",
     "babel-plugin-transform-react-jsx": "6.4.0",
