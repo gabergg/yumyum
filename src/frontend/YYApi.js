@@ -34,7 +34,7 @@ export function fetchInitialData() {
     return post(url);
 }
 
-export function getAutocompleteSuggestion(text_entered) {
+export function getAutocompleteSuggestions(text_entered) {
     const url = `${API_BASE}${AUTOCOMPETE_ENDPOINT}`;
     const data = {input: text_entered};
     return post(url, {}, data);

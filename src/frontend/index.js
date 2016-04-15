@@ -5,9 +5,10 @@ import {createStore} from 'redux';
 
 import YYConnector from './redux/YYConnector';
 import YYReducer from './redux/YYReducer';
+import {yyActions} from './redux/yyActions';
 import {
     fetchInitialData,
-    getAutocompleteSuggestion,
+    getAutocompleteSuggestions,
 } from './YYApi';
 
 
@@ -16,7 +17,7 @@ function renderYumYum(data) {
     const YYStore = createStore(YYReducer);
 
     YYStore.dispatch({
-        type: 'INITIAL_PAGE_LOAD',
+        type: yyActions.INITIAL_PAGE_LOAD,
         payload: data,
     });
 
@@ -34,9 +35,5 @@ function renderYumYum(data) {
     render(ui, document.getElementById('root'));
 
 }
-
-getAutocompleteSuggestion("house of pa").then( (res) =>
-    console.log(res)
-)
 
 fetchInitialData().then(renderYumYum);

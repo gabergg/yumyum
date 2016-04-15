@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import yyActionCreators from './yyActionCreators';
+import {yyActionCreators} from './yyActions';
 import YumYum from '../components/YumYum';
 
 

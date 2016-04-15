@@ -17,19 +17,25 @@ class RatingForm extends Component {
     };
 
     render() {
-        console.log(this.props);
+        const {
+            authors,
+        } = this.props;
+
         return (
             <div style={Styles.form}>
+                <label> Author </label>
                 <select>
-                    {this.props.authors && this.props.authors.map((author, i) => (
+                    {authors && authors.map((author, i) => (
                         <option key={i}>
                             {author}
                         </option>
                     ))}
                 </select>
-                <input/> //rating
-                <input/> //description
-                <button/> //submit
+                <label> Rating </label>
+                <input/>
+                <label> Description </label>
+                <textarea/>
+                <button> Submit </button>
             </div>
         );
     }
