@@ -15,19 +15,6 @@ export default class SearchForm extends Component {
         suggestions: PropTypes.array,
     };
 
-    componentDidMount() {
-
-        const {
-            yyActions,
-        } = this.props;
-
-        const input = "house of pancook";
-
-        yyActions.fetchAutocompleteSuggestions({
-            input,
-        });
-    }
-
     render() {
 
         const {
@@ -43,7 +30,13 @@ export default class SearchForm extends Component {
         return (
             <div style={Styles.form}>
                 <label> What restaurant? </label>
-                <input/>
+                <input onKeyUp={(e) =>
+                    yyActions.fetchAutocompleteSuggestions(
+                        {
+                            input: e.target.value,
+                        }
+                    )}
+                />
                 { suggestions && (
                     <AutocompleteDropdown {...autocompleteProps}/>
                 )}
