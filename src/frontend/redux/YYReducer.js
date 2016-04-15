@@ -6,6 +6,7 @@ const initialState = {
     ratings: [],
     authors: [],
     selectedAuthor: null,
+    selectedSuggestion: null,
     suggestions: [],
 };
 
@@ -24,13 +25,19 @@ function YYReducer(state0 = initialState, action) {
         case yyActions.RECEIVED_AUTOCOMPLETE_SUGGESTIONS:
             return {
                 ...state0,
-                suggestions: action.payload.suggestions
+                suggestions: action.payload.suggestions,
             };
         case yyActions.SUGGESTION_SELECTED:
-            const new_suggestions = state0.suggestions.concat(action.payload.suggestion);
             return {
                 ...state0,
-                suggestions: new_suggestions,
+                suggestions: [],
+                selectedSuggestion: action.payload.suggestion,
+            };
+        case yyActions.CLEAR_SELECTED_SUGGESTION:
+            console.log("we in it");
+            return {
+                ...state0,
+                selectedSuggestion: null,
             };
         default:
             return state0;

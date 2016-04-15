@@ -30,14 +30,13 @@ def build_fake_suggestions(inp):
 @app.route('/api/autocomplete', methods=['POST'])
 def get_suggestions():
     inp = request.get_json().get('input')
-    return jsonify(build_fake_suggestions(inp))
-    # payload = {
-    #     'input': request.get_json().get('input'),
-    #     'key': api_keys['google'],
-    #     'location': SF_LAT_LONG,
-    #     'radius': PLACE_RADIUS,
-    # }
-    # res = requests.get(GOOGLE_PLACES_ENDPOINT, params=payload)
-    # predictions = res.json().get('predictions')
-    # suggestions = map(lambda x: x['description'], predictions)
-    # return jsonify({"suggestions": suggestions})
+    payload = {
+        'input': request.get_json().get('input'),
+        'key': api_keys['google'],
+        'location': SF_LAT_LONG,
+        'radius': PLACE_RADIUS,
+    }
+    res = requests.get(GOOGLE_PLACES_ENDPOINT, params=payload)
+    predictions = res.json().get('predictions')
+    suggestions = map(lambda x: x['description'], predictions)
+    return jsonify({"suggestions": suggestions})
