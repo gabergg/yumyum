@@ -35,7 +35,7 @@ function renderYumYum(data) {
 
 }
 
-getAutocompleteSuggestion("house of pancak").then( (res) =>
+getAutocompleteSuggestion("house of pa").then( (res) =>
     console.log(res)
 )
 

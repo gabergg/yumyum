@@ -13,7 +13,7 @@ const Styles = {
 class RatingForm extends Component {
 
     static propTypes = {
-        authors: PropTypes.array.required
+        authors: PropTypes.array.isRequired
     };
 
     render() {

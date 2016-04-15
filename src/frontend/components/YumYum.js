@@ -6,7 +6,7 @@ import YYBodyContainer from './YYBodyContainer'
 class YumYum extends Component {
 
     static propTypes = {
-        authors: PropTypes.array.required
+        authors: PropTypes.array.isRequired
     }
 
     render() {

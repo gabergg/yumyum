@@ -5,7 +5,7 @@ import RatingForm from './RatingForm'
 class YYBodyContainer extends Component {
 
     static propTypes = {
-        authors: PropTypes.array.required
+        authors: PropTypes.array.isRequired
     }
 
     render() {
