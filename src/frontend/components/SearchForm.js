@@ -16,9 +16,7 @@ export default class SearchForm extends Component {
     };
 
     render() {
-        console.log(this.props);
         const {
-            selectedSuggestion,
             suggestions,
             yyActions,
         } = this.props;
@@ -38,8 +36,6 @@ export default class SearchForm extends Component {
                                 input: e.target.value,
                             }
                         )}
-                    onKeyDown={yyActions.clearSelectedSuggestion}
-                    value={selectedSuggestion}
                 />
                 { suggestions && (
                     <AutocompleteDropdown {...autocompleteProps}/>

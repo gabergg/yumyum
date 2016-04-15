@@ -38,5 +38,6 @@ def get_suggestions():
     }
     res = requests.get(GOOGLE_PLACES_ENDPOINT, params=payload)
     predictions = res.json().get('predictions')
+    print predictions
     suggestions = map(lambda x: x['description'], predictions)
     return jsonify({"suggestions": suggestions})

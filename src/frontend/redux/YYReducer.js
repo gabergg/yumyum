@@ -6,8 +6,9 @@ const initialState = {
     ratings: [],
     authors: [],
     selectedAuthor: null,
-    selectedSuggestion: null,
+    spot: "",
     suggestions: [],
+    ratingBar: 2.5,
 };
 
 function YYReducer(state0 = initialState, action) {
@@ -31,13 +32,13 @@ function YYReducer(state0 = initialState, action) {
             return {
                 ...state0,
                 suggestions: [],
-                selectedSuggestion: action.payload.suggestion,
+                spot: action.payload.suggestion,
             };
-        case yyActions.CLEAR_SELECTED_SUGGESTION:
-            console.log("we in it");
+        case yyActions.UPDATE_RATING_BAR:
+            console.log(action.payload.rating);
             return {
                 ...state0,
-                selectedSuggestion: null,
+                ratingBar: action.payload.rating,
             };
         default:
             return state0;

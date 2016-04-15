@@ -9,13 +9,13 @@ const RECEIVED_AUTOCOMPLETE_SUGGESTIONS = 'RECEIVED_AUTOCOMPLETE_SUGGESTIONS';
 const FETCH_AUTOCOMPLETE_SUGGESTIONS = 'FETCH_AUTOCOMPLETE_SUGGESTIONS';
 const AUTOCOMPLETE_FETCH_FAILED = 'AUTOCOMPLETE_FETCH_FAILED';
 const SUGGESTION_SELECTED = 'SUGGESTION_SELECTED';
-const CLEAR_SELECTED_SUGGESTION = 'CLEAR_SELECTED_SUGGESTION';
+const UPDATE_RATING_BAR = 'UPDATE_RATING_BAR';
 
 export const yyActions = {
     SUBMIT_RATING, SUBMIT_SEARCH,
     INITIAL_PAGE_LOAD, FETCH_AUTOCOMPLETE_SUGGESTIONS,
     RECEIVED_AUTOCOMPLETE_SUGGESTIONS, SUGGESTION_SELECTED,
-    CLEAR_SELECTED_SUGGESTION,
+    UPDATE_RATING_BAR,
 };
 
 function submitRating({author, rating, description}) {
@@ -47,10 +47,14 @@ function suggestionSelected({suggestion}) {
     };
 }
 
-function clearSelectedSuggestion() {
+function updateRatingBar({rating}) {
+    console.log(rating);
     return {
-        type: CLEAR_SELECTED_SUGGESTION,
-    }
+        type: UPDATE_RATING_BAR,
+        payload: {
+            rating,
+        },
+    };
 }
 
 function fetchAutocompleteSuggestions({input}) {
@@ -83,7 +87,7 @@ export const yyActionCreators = {
     submitSearch,
     submitRating,
     suggestionSelected,
-    clearSelectedSuggestion,
+    updateRatingBar,
     fetchAutocompleteSuggestions,
     receivedAutocompleteSuggestions,
 };
