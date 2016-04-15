@@ -1,8 +1,6 @@
 import {getAutocompleteSuggestions} from '../YYApi';
 
 const SUBMIT_RATING = 'SUBMIT_RATING';
-const SHOW_AUTHOR_DROPDOWN = 'SHOW_AUTHOR_DROPDOWN';
-const AUTHOR_SELECTED = 'AUTHOR_SELECTED';
 const SUBMIT_SEARCH = 'SUBMIT_SEARCH';
 const INITIAL_PAGE_LOAD = 'INITIAL_PAGE_LOAD';
 const RECEIVED_AUTOCOMPLETE_SUGGESTIONS = 'RECEIVED_AUTOCOMPLETE_SUGGESTIONS';
@@ -11,10 +9,9 @@ const AUTOCOMPLETE_FETCH_FAILED = 'AUTOCOMPLETE_FETCH_FAILED';
 const SUGGESTION_SELECTED = 'SUGGESTION_SELECTED';
 
 export const yyActions = {
-    SUBMIT_RATING, SHOW_AUTHOR_DROPDOWN, AUTHOR_SELECTED,
-    SUBMIT_SEARCH, RECEIVED_AUTOCOMPLETE_SUGGESTIONS,
+    SUBMIT_RATING, SUBMIT_SEARCH,
     INITIAL_PAGE_LOAD, FETCH_AUTOCOMPLETE_SUGGESTIONS,
-    SUGGESTION_SELECTED,
+    RECEIVED_AUTOCOMPLETE_SUGGESTIONS, SUGGESTION_SELECTED,
 };
 
 function submitRating({author, rating, description}) {
@@ -26,24 +23,6 @@ function submitRating({author, rating, description}) {
             description,
         },
     };
-}
-
-function showAuthorDropdown({authors}) {
-    return {
-        type: SHOW_AUTHOR_DROPDOWN,
-        payload: {
-            authors,
-        },
-    }
-}
-
-function authorSelected({author}) {
-    return {
-        type: AUTHOR_SELECTED,
-        payload: {
-            author,
-        },
-    }
 }
 
 function submitSearch({venue}) {
@@ -101,8 +80,6 @@ function receivedAutocompleteSuggestions({suggestions}) {
 
 export const yyActionCreators = {
     submitSearch,
-    showAuthorDropdown,
-    authorSelected,
     submitRating,
     suggestionSelected,
     fetchAutocompleteSuggestions,
