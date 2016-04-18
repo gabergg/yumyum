@@ -1,5 +1,11 @@
 from flask import Flask
+from flask.ext.sqlalchemy import SQLAlchemy
+import os
 
 app = Flask(__name__)
-from app import views
-from app import api
+app.config.from_object(os.environ['APP_SETTINGS'])
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+
+from app import views, api
+from models import Rating, Spot
