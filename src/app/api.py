@@ -1,5 +1,6 @@
 import csv
 import requests
+import os
 
 from app import app
 from flask import jsonify, request, make_response
@@ -13,10 +14,13 @@ data = {
 }
 api_keys = {}
 
-with open('secrets.csv', 'rb') as csvfile:
-    keyreader = csv.reader(csvfile, delimiter=':')
-    for row in keyreader:
-        api_keys[row[0]] = row[1]
+if app.config['DEBUG']:
+    with open('secrets.csv', 'rb') as csvfile:
+        keyreader = csv.reader(csvfile, delimiter=':')
+        for row in keyreader:
+            api_keys[row[0]] = row[1]
+else:
+    api_keys['google'] = os.environ['GOOGLE_API_KEY']
 
 @app.route('/api/startup', methods=['POST'])
 def fetch_initial_data():
