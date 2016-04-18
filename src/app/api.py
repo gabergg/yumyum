@@ -22,9 +22,31 @@ with open('secrets.csv', 'rb') as csvfile:
 def fetch_initial_data():
     return jsonify(data)
 
+@app.route('/api/submit_rating', methods=['POST'])
+def submit_rating():
+    res_json = request.get_json()
+    author = res_json.get("author")
+    rating = res_json.get("rating")
+    description = res_json.get("description")
+    print "%s %d %s" % (author, rating, description)
+    return jsonify({})
+
+def fake_suggestion(name, id):
+    return {
+        "name": name,
+        "id": id,
+    }
+
 def build_fake_suggestions(inp):
     return {
-        "suggestions": [inp + str(i) for i in range(5)]
+        "suggestions": [fake_suggestion(inp + str(i), i) for i in range(5)]
+    }
+
+def build_suggestion(prediction):
+    return {
+        "name": prediction['terms'][0]['value'],
+        "description": prediction['description'],
+        "id": prediction['id'],
     }
 
 @app.route('/api/autocomplete', methods=['POST'])
@@ -38,6 +60,5 @@ def get_suggestions():
     }
     res = requests.get(GOOGLE_PLACES_ENDPOINT, params=payload)
     predictions = res.json().get('predictions')
-    print predictions
-    suggestions = map(lambda x: x['description'], predictions)
+    suggestions = map(build_suggestion, predictions)
     return jsonify({"suggestions": suggestions})

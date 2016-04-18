@@ -1,6 +1,7 @@
-const API_BASE = "/api"
-const INITIAL_API_ENDPOINT = "/startup"
-const AUTOCOMPETE_ENDPOINT = "/autocomplete"
+const API_BASE = "/api";
+const INITIAL_API_ENDPOINT = "/startup";
+const AUTOCOMPETE_ENDPOINT = "/autocomplete";
+const SUBMIT_RATING_ENDPOINT = "/submit_rating";
 
 const JSON_HEADERS = {
     'Accept': 'application/json',
@@ -37,5 +38,15 @@ export function fetchInitialData() {
 export function getAutocompleteSuggestions(text_entered) {
     const url = `${API_BASE}${AUTOCOMPETE_ENDPOINT}`;
     const data = {input: text_entered};
+    return post(url, {}, data);
+}
+
+export function submitRating(author, rating, description) {
+    const url = `${API_BASE}${SUBMIT_RATING_ENDPOINT}`;
+    const data = {
+        author,
+        rating,
+        description,
+    };
     return post(url, {}, data);
 }

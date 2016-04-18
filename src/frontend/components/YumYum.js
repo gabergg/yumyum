@@ -2,6 +2,11 @@ import React, {Component, PropTypes} from 'react';
 
 import YYBodyContainer from './YYBodyContainer'
 
+const Styles = {
+    yumyum: {
+        display: 'flex',
+    },
+}
 
 class YumYum extends Component {
 
@@ -11,7 +16,9 @@ class YumYum extends Component {
 
     render() {
         return (
-            <YYBodyContainer {...this.props}/>
+            <div style={Styles.yumyum}>
+                <YYBodyContainer {...this.props}/>
+            </div>
         );
     }
 }

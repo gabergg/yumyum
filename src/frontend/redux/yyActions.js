@@ -1,42 +1,31 @@
 import 'babel-polyfill';
 
-import {getAutocompleteSuggestions} from '../YYApi';
+import {
+    getAutocompleteSuggestions,
+    submitRating,
+} from '../YYApi';
 
-const SUBMIT_RATING = 'SUBMIT_RATING';
-const SUBMIT_SEARCH = 'SUBMIT_SEARCH';
 const INITIAL_PAGE_LOAD = 'INITIAL_PAGE_LOAD';
 const RECEIVED_AUTOCOMPLETE_SUGGESTIONS = 'RECEIVED_AUTOCOMPLETE_SUGGESTIONS';
 const FETCH_AUTOCOMPLETE_SUGGESTIONS = 'FETCH_AUTOCOMPLETE_SUGGESTIONS';
 const AUTOCOMPLETE_FETCH_FAILED = 'AUTOCOMPLETE_FETCH_FAILED';
 const SUGGESTION_SELECTED = 'SUGGESTION_SELECTED';
 const UPDATE_RATING_BAR = 'UPDATE_RATING_BAR';
+const UPDATE_FORM_AUTHOR = 'UPDATE_FORM_AUTHOR';
+const UPDATE_FORM_RATING = 'UPDATE_FORM_RATING';
+const UPDATE_FORM_DESCRIPTION = 'UPDATE_FORM_DESCRIPTION';
+const SUBMIT_RATING_FORM = 'SUBMIT_RATING_FORM';
+const SUBMIT_RATING_FORM_SUCCESS = 'SUBMIT_RATING_FORM_SUCCESS';
+const SUBMIT_RATING_FORM_FAIL = 'SUBMIT_RATING_FORM_FAIL';
 
 export const yyActions = {
-    SUBMIT_RATING, SUBMIT_SEARCH,
-    INITIAL_PAGE_LOAD, FETCH_AUTOCOMPLETE_SUGGESTIONS,
+    SUBMIT_RATING_FORM, INITIAL_PAGE_LOAD,
+    FETCH_AUTOCOMPLETE_SUGGESTIONS, UPDATE_FORM_RATING,
     RECEIVED_AUTOCOMPLETE_SUGGESTIONS, SUGGESTION_SELECTED,
-    UPDATE_RATING_BAR,
+    UPDATE_RATING_BAR, UPDATE_FORM_AUTHOR,
+    UPDATE_FORM_DESCRIPTION, SUBMIT_RATING_FORM_SUCCESS,
+    SUBMIT_RATING_FORM_FAIL,
 };
-
-function submitRating({author, rating, description}) {
-    return {
-        type: SUBMIT_RATING,
-        payload: {
-            author,
-            rating,
-            description,
-        },
-    };
-}
-
-function submitSearch({venue}) {
-    return {
-        type: SUBMIT_SEARCH,
-        payload: {
-            venue,
-        },
-    }
-}
 
 function suggestionSelected({suggestion}) {
     return {
@@ -47,14 +36,61 @@ function suggestionSelected({suggestion}) {
     };
 }
 
+function updateFormAuthor({author}) {
+    return {
+        type: UPDATE_FORM_AUTHOR,
+        payload: {
+            author,
+        }
+    }
+}
+
+function updateFormRating({rating}) {
+    return {
+        type: UPDATE_FORM_RATING,
+        payload: {
+            rating,
+        }
+    }
+}
+
+function updateFormDescription({description}) {
+    return {
+        type: UPDATE_FORM_DESCRIPTION,
+        payload: {
+            description,
+        }
+    }
+}
+
 function updateRatingBar({rating}) {
-    console.log(rating);
     return {
         type: UPDATE_RATING_BAR,
         payload: {
             rating,
         },
     };
+}
+
+function submitRatingForm({form}) {
+    const {
+        author,
+        rating,
+        description,
+    } = form;
+    return async function (dispatch) {
+        try {
+            const hey = await submitRating(author, rating, description);
+            dispatch({
+                type: SUBMIT_RATING_FORM_SUCCESS,
+            });
+
+        } catch (e) {
+            dispatch({
+                type: SUBMIT_RATING_FORM_FAIL,
+            });
+        }
+    }
 }
 
 function fetchAutocompleteSuggestions({input}) {
@@ -84,10 +120,12 @@ function receivedAutocompleteSuggestions({suggestions}) {
 }
 
 export const yyActionCreators = {
-    submitSearch,
-    submitRating,
+    submitRatingForm,
     suggestionSelected,
     updateRatingBar,
+    updateFormAuthor,
+    updateFormRating,
+    updateFormDescription,
     fetchAutocompleteSuggestions,
     receivedAutocompleteSuggestions,
 };

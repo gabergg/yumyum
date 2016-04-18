@@ -9,7 +9,7 @@ const Styles = {
 export default class AutocompleteSuggestion extends Component {
 
     static propTypes = {
-        suggestion: PropTypes.string.isRequired,
+        suggestion: PropTypes.object.isRequired,
         onClick: PropTypes.func.isRequired,
     };
 
@@ -24,7 +24,7 @@ export default class AutocompleteSuggestion extends Component {
                 style={Styles.suggestion}
                 onClick={() => onClick({suggestion})}
                 >
-                <span> {suggestion} </span>
+                <span> {suggestion.description} </span>
             </div>
         );
     }
