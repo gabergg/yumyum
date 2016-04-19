@@ -1,8 +1,10 @@
 import csv
 import requests
 import os
+import sys
 
-from app import app
+from app import app, db
+from models import Rating
 from flask import jsonify, request, make_response
 
 GOOGLE_PLACES_ENDPOINT = "https://maps.googleapis.com/maps/api/place/autocomplete/json"
@@ -32,7 +34,18 @@ def submit_rating():
     author = res_json.get("author")
     rating = res_json.get("rating")
     description = res_json.get("description")
-    print "%s %d %s" % (author, rating, description)
+    try:
+        new_rating = Rating(
+            author = author,
+            score = rating,
+            description = description,
+        )
+        db.session.add(new_rating)
+        db.session.commit()
+        print "%s %d %s" % (author, rating, description)
+    except:
+        print sys.exc_info()[0]
+        print "shit we failed"
     return jsonify({})
 
 def fake_suggestion(name, id):

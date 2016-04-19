@@ -33,6 +33,7 @@ class Rating(db.Model):
     score = db.Column(db.Integer())
     description = db.Column(db.Text())
     author = db.Column(db.String(255), unique=True)
+    spot_id = db.Column(db.Integer, db.ForeignKey('spots.id'))
 
     def __init__(self, author, score, description):
         self.author = author
