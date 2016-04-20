@@ -6,10 +6,12 @@ class Spot(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255))
+    google_id = db.Column(db.Integer, unique=True)
     ratings = db.relationship('Rating')
 
     def __init__(self, name, ratings):
         self.name = name
+        self.google_id = google_id
         self.ratings = ratings
 
     def __repr__(self):
@@ -22,6 +24,7 @@ class Spot(db.Model):
         return {
             'id': self.id,
             'name': self.name,
+            'google_id': self.google_id,
             'ratings': self.get_ratings(),
         }
 

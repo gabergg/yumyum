@@ -4,7 +4,7 @@ import os
 import sys
 
 from app import app, db
-from models import Rating
+from models import Rating, Spot
 from flask import jsonify, request, make_response
 
 GOOGLE_PLACES_ENDPOINT = "https://maps.googleapis.com/maps/api/place/autocomplete/json"
@@ -31,26 +31,39 @@ def fetch_initial_data():
 @app.route('/api/submit_rating', methods=['POST'])
 def submit_rating():
     res_json = request.get_json()
-    author = res_json.get("author")
-    rating = res_json.get("rating")
-    description = res_json.get("description")
+    spot = res_json.get('spot')
+    rating = res_json.get('rating')
+
     try:
         new_rating = Rating(
-            author = author,
-            score = rating,
-            description = description,
+            author = rating.get('author'),
+            score = rating.get('score'),
+            description = rating.get('description'),
         )
-        db.session.add(new_rating)
+        existing_spot = Spot.query.where(google_id = spot.get('google_id'))
+        if existing_spot:
+            existing_spot.ratings.concat(new_rating)
+        else:
+            existing_spot = Spot(
+                name = spot.get('name'),
+                google_id = spot.get('google_id'),
+                ratings = [new_rating],
+        )
+
+        db.session.add_or_update(existing_spot)
+
+        db.session.add(new_rating) # drop this?
         db.session.commit()
-        print "%s %d %s" % (author, rating, description)
+        print "Successfully submitted rating"
     except:
-        print sys.exc_info()[0]
-        print "shit we failed"
+        print str(sys.exc_info()[0])
+        print "Failed to submit rating"
     return jsonify({})
 
 def fake_suggestion(name, id):
     return {
         "name": name,
+        "description": name + ", Tokyo, Japan",
         "id": id,
     }
 
@@ -69,6 +82,7 @@ def build_suggestion(prediction):
 @app.route('/api/autocomplete', methods=['POST'])
 def get_suggestions():
     inp = request.get_json().get('input')
+    return jsonify(build_fake_suggestions(inp))
     payload = {
         'input': request.get_json().get('input'),
         'key': api_keys['google'],

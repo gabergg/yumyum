@@ -11,19 +11,19 @@ const FETCH_AUTOCOMPLETE_SUGGESTIONS = 'FETCH_AUTOCOMPLETE_SUGGESTIONS';
 const AUTOCOMPLETE_FETCH_FAILED = 'AUTOCOMPLETE_FETCH_FAILED';
 const SUGGESTION_SELECTED = 'SUGGESTION_SELECTED';
 const UPDATE_RATING_BAR = 'UPDATE_RATING_BAR';
-const UPDATE_FORM_AUTHOR = 'UPDATE_FORM_AUTHOR';
-const UPDATE_FORM_RATING = 'UPDATE_FORM_RATING';
-const UPDATE_FORM_DESCRIPTION = 'UPDATE_FORM_DESCRIPTION';
+const UPDATE_RATING_AUTHOR = 'UPDATE_RATING_AUTHOR';
+const UPDATE_RATING_SCORE = 'UPDATE_RATING_SCORE';
+const UPDATE_RATING_DESCRIPTION = 'UPDATE_RATING_DESCRIPTION';
 const SUBMIT_RATING_FORM = 'SUBMIT_RATING_FORM';
 const SUBMIT_RATING_FORM_SUCCESS = 'SUBMIT_RATING_FORM_SUCCESS';
 const SUBMIT_RATING_FORM_FAIL = 'SUBMIT_RATING_FORM_FAIL';
 
 export const yyActions = {
     SUBMIT_RATING_FORM, INITIAL_PAGE_LOAD,
-    FETCH_AUTOCOMPLETE_SUGGESTIONS, UPDATE_FORM_RATING,
+    FETCH_AUTOCOMPLETE_SUGGESTIONS, UPDATE_RATING_SCORE,
     RECEIVED_AUTOCOMPLETE_SUGGESTIONS, SUGGESTION_SELECTED,
-    UPDATE_RATING_BAR, UPDATE_FORM_AUTHOR,
-    UPDATE_FORM_DESCRIPTION, SUBMIT_RATING_FORM_SUCCESS,
+    UPDATE_RATING_BAR, UPDATE_RATING_AUTHOR,
+    UPDATE_RATING_DESCRIPTION, SUBMIT_RATING_FORM_SUCCESS,
     SUBMIT_RATING_FORM_FAIL,
 };
 
@@ -36,27 +36,27 @@ function suggestionSelected({suggestion}) {
     };
 }
 
-function updateFormAuthor({author}) {
+function updateRatingAuthor({author}) {
     return {
-        type: UPDATE_FORM_AUTHOR,
+        type: UPDATE_RATING_AUTHOR,
         payload: {
             author,
         }
     }
 }
 
-function updateFormRating({rating}) {
+function updateRatingScore({rating}) {
     return {
-        type: UPDATE_FORM_RATING,
+        type: UPDATE_RATING_SCORE,
         payload: {
             rating,
         }
     }
 }
 
-function updateFormDescription({description}) {
+function updateRatingDescription({description}) {
     return {
-        type: UPDATE_FORM_DESCRIPTION,
+        type: UPDATE_RATING_DESCRIPTION,
         payload: {
             description,
         }
@@ -72,15 +72,10 @@ function updateRatingBar({rating}) {
     };
 }
 
-function submitRatingForm({form}) {
-    const {
-        author,
-        rating,
-        description,
-    } = form;
+function submitRatingForm({spot, rating}) {
     return async function (dispatch) {
         try {
-            const hey = await submitRating(author, rating, description);
+            const hey = await submitRating(spot, rating);
             dispatch({
                 type: SUBMIT_RATING_FORM_SUCCESS,
             });
@@ -123,9 +118,9 @@ export const yyActionCreators = {
     submitRatingForm,
     suggestionSelected,
     updateRatingBar,
-    updateFormAuthor,
-    updateFormRating,
-    updateFormDescription,
+    updateRatingAuthor,
+    updateRatingScore,
+    updateRatingDescription,
     fetchAutocompleteSuggestions,
     receivedAutocompleteSuggestions,
 };

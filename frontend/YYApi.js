@@ -41,12 +41,11 @@ export function getAutocompleteSuggestions(text_entered) {
     return post(url, {}, data);
 }
 
-export function submitRating(author, rating, description) {
+export function submitRating(spot, rating) {
     const url = `${API_BASE}${SUBMIT_RATING_ENDPOINT}`;
     const data = {
-        author,
+        spot,
         rating,
-        description,
     };
     return post(url, {}, data);
 }

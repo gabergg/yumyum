@@ -27,12 +27,12 @@ class RatingForm extends Component {
 
     static propTypes = {
         authors: PropTypes.array.isRequired,
-        spot: PropTypes.string.isRequired,
+        spot: PropTypes.object.isRequired,
     };
 
-    updateFormAuthor(e) {
+    updateRatingAuthor(e) {
         const {yyActions} = this.props;
-        yyActions.updateFormAuthor({
+        yyActions.updateRatingAuthor({
             author: e.target.value,
         });
     }
@@ -43,25 +43,27 @@ class RatingForm extends Component {
         yyActions.updateRatingBar({
             rating: ratingValue,
         });
-        yyActions.updateFormRating({
+        yyActions.updateRatingScore({
             rating: ratingValue,
         });
     }
 
-    updateFormDescription(e) {
+    updateRatingDescription(e) {
         const {yyActions} = this.props;
-        yyActions.updateFormDescription({
+        yyActions.updateRatingDescription({
             description: e.target.value,
         });
     }
 
     submitRatingForm() {
         const {
-            form,
+            rating,
+            spot,
             yyActions,
         } = this.props;
         yyActions.submitRatingForm({
-            form: form,
+            spot,
+            rating,
         });
     }
 
@@ -75,12 +77,12 @@ class RatingForm extends Component {
         return (
             <div style={Styles.form}>
                 <div style={Styles.formSection}>
-                    <span> {spot} </span>
+                    <span> {spot.name} </span>
                 </div>
                 <div style={Styles.formSection}>
                     <select
                         style={Styles.authors}
-                        onChange={this.updateFormAuthor.bind(this)}
+                        onChange={this.updateRatingAuthor.bind(this)}
                     >
                         {authors && authors.map((author, i) => (
                             <option key={i}>
@@ -102,7 +104,7 @@ class RatingForm extends Component {
                 <div style={Styles.formSection}>
                     <textarea
                         style={Styles.description}
-                        onChange={this.updateFormDescription.bind(this)}
+                        onChange={this.updateRatingDescription.bind(this)}
                     />
                 </div>
                 <div style={Styles.formSection}>

@@ -5,11 +5,15 @@ import {yyActions} from './yyActions';
 const initialState = {
     ratings: [],
     authors: [],
-    selectedAuthor: null,
-    spot: "",
+    selectedAuthor: "",
+    spot: {
+        id: "",
+        name: "",
+        description: "",
+    },
     suggestions: [],
     ratingBar: 2.5,
-    form: {
+    rating: {
         author: "",
         rating: 2.5,
         description: "",
@@ -37,34 +41,34 @@ function YYReducer(state0 = initialState, action) {
             return {
                 ...state0,
                 suggestions: [],
-                spot: action.payload.suggestion.name,
+                spot: action.payload.suggestion,
             };
         case yyActions.UPDATE_RATING_BAR:
             return {
                 ...state0,
                 ratingBar: action.payload.rating,
             };
-        case yyActions.UPDATE_FORM_AUTHOR:
+        case yyActions.UPDATE_RATING_AUTHOR:
             return {
                 ...state0,
-                form: {
-                    ...state0.form,
+                rating: {
+                    ...state0.rating,
                     author: action.payload.author,
                 },
             };
-        case yyActions.UPDATE_FORM_RATING:
+        case yyActions.UPDATE_RATING_SCORE:
             return {
                 ...state0,
                 form: {
-                    ...state0.form,
+                    ...state0.rating,
                     rating: action.payload.rating,
                 },
             };
-        case yyActions.UPDATE_FORM_DESCRIPTION:
+        case yyActions.UPDATE_RATING_DESCRIPTION:
             return {
                 ...state0,
                 form: {
-                    ...state0.form,
+                    ...state0.rating,
                     description: action.payload.description,
                 },
             };
@@ -75,7 +79,6 @@ function YYReducer(state0 = initialState, action) {
                 spot: null,
             };
         case yyActions.SUBMIT_RATING_FORM_FAIL:
-            console.log("we failed");
             return {
                 ...state0,
             };

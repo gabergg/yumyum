@@ -7,7 +7,7 @@ class YYBodyContainer extends Component {
 
     static propTypes = {
         authors: PropTypes.array.isRequired,
-        spot: PropTypes.string
+        spot: PropTypes.object
     };
 
     ratingForm() {
@@ -23,7 +23,7 @@ class YYBodyContainer extends Component {
     }
 
     render() {
-        if(this.props.spot)
+        if(this.props.spot.name)
             return this.ratingForm();
         else
             return this.searchForm();
