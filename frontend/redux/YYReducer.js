@@ -6,16 +6,12 @@ const initialState = {
     ratings: [],
     authors: [],
     selectedAuthor: "",
-    spot: {
-        id: "",
-        name: "",
-        description: "",
-    },
+    spot: {},
     suggestions: [],
-    ratingBar: 2.5,
+    ratingBar: 0,
     rating: {
         author: "",
-        rating: 2.5,
+        score: 0,
         description: "",
     },
 };
@@ -25,7 +21,11 @@ function YYReducer(state0 = initialState, action) {
         case yyActions.INITIAL_PAGE_LOAD:
             return {
                 ...state0,
-                authors: state0.authors.concat(action.payload.authors)
+                authors: state0.authors.concat(action.payload.authors),
+                rating: {
+                    ...state0.rating,
+                    author: action.payload.authors[0],
+                },
             };
         case yyActions.AUTHOR_SELECTED:
             return {
@@ -46,7 +46,7 @@ function YYReducer(state0 = initialState, action) {
         case yyActions.UPDATE_RATING_BAR:
             return {
                 ...state0,
-                ratingBar: action.payload.rating,
+                ratingBar: action.payload.score,
             };
         case yyActions.UPDATE_RATING_AUTHOR:
             return {
@@ -59,15 +59,15 @@ function YYReducer(state0 = initialState, action) {
         case yyActions.UPDATE_RATING_SCORE:
             return {
                 ...state0,
-                form: {
+                rating: {
                     ...state0.rating,
-                    rating: action.payload.rating,
+                    score: action.payload.score,
                 },
             };
         case yyActions.UPDATE_RATING_DESCRIPTION:
             return {
                 ...state0,
-                form: {
+                rating: {
                     ...state0.rating,
                     description: action.payload.description,
                 },

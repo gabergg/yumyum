@@ -10,23 +10,17 @@ class YYBodyContainer extends Component {
         spot: PropTypes.object
     };
 
-    ratingForm() {
-        return (
-            <RatingForm {...this.props}/>
-        );
-    }
-
-    searchForm() {
-        return (
-            <SearchForm {...this.props}/>
-        );
-    }
-
     render() {
-        if(this.props.spot.name)
-            return this.ratingForm();
-        else
-            return this.searchForm();
+        return (
+            <div>
+                <SearchForm {...this.props}/>
+                {
+                    this.props.spot && (
+                        <RatingForm {...this.props}/>
+                    )
+                }
+            </div>
+        );
     }
 }
 

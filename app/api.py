@@ -12,7 +12,7 @@ SF_LAT_LONG = "37.760737,-122.467954"
 PLACE_RADIUS = "10000"
 
 data = {
-    "authors": ["jenn", "gabe"]
+    "authors": ["Jenn", "Gabe"]
 }
 api_keys = {}
 
@@ -56,8 +56,8 @@ def submit_rating():
         db.session.commit()
         print "Successfully submitted rating"
     except:
-        print str(sys.exc_info()[0])
         print "Failed to submit rating"
+        print str(sys.exc_info()[0])
     return jsonify({})
 
 def fake_suggestion(name, id):

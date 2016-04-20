@@ -15,7 +15,20 @@ const Styles = {
         textAlign: "center",
     },
     authors: {
+        flexDirection: "row",
         width: "100%",
+    },
+    authorButton: {
+        cursor: "pointer",
+        border: "1px solid black",
+        width: "60px",
+        height: "30px",
+    },
+    selectedAuthorButton: {
+        cursor: "pointer",
+        border: "3px solid red",
+        width: "60px",
+        height: "30px",
     },
     description: {
         boxSizing: "border-box",
@@ -33,18 +46,18 @@ class RatingForm extends Component {
     updateRatingAuthor(e) {
         const {yyActions} = this.props;
         yyActions.updateRatingAuthor({
-            author: e.target.value,
+            author: e.target.innerText,
         });
     }
 
-    updateRatingValue(e) {
+    updateRatingScore(e) {
         const {yyActions} = this.props;
-        const ratingValue = parseFloat(e.target.value);
+        const score = parseFloat(e.target.value);
         yyActions.updateRatingBar({
-            rating: ratingValue,
+            score,
         });
         yyActions.updateRatingScore({
-            rating: ratingValue,
+            score,
         });
     }
 
@@ -72,24 +85,28 @@ class RatingForm extends Component {
             authors,
             spot,
             ratingBar,
+            rating,
         } = this.props;
+
+        console.log(this.props.rating);
 
         return (
             <div style={Styles.form}>
                 <div style={Styles.formSection}>
                     <span> {spot.name} </span>
                 </div>
-                <div style={Styles.formSection}>
-                    <select
-                        style={Styles.authors}
-                        onChange={this.updateRatingAuthor.bind(this)}
-                    >
-                        {authors && authors.map((author, i) => (
-                            <option key={i}>
-                                {author}
-                            </option>
-                        ))}
-                    </select>
+                <div style={Styles.authors}>
+                    {authors && authors.map((author, i) => (
+                        <div
+                            key={i}
+                            style={author === rating.author ?
+                                Styles.selectedAuthorButton : Styles.authorButton
+                            }
+                            onClick={this.updateRatingAuthor.bind(this)}
+                            >
+                            {author}
+                        </div>
+                    ))}
                 </div>
                 <div style={Styles.formSection}>
                     <input
@@ -97,7 +114,8 @@ class RatingForm extends Component {
                         min="0"
                         max="5"
                         step=".25"
-                        onChange={this.updateRatingValue.bind(this)}
+                        value={rating.score}
+                        onChange={this.updateRatingScore.bind(this)}
                     />
                     <label> {ratingBar} </label>
                 </div>
