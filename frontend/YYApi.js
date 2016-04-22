@@ -1,7 +1,10 @@
-const API_BASE = "/api";
-const INITIAL_API_ENDPOINT = "/startup";
-const AUTOCOMPETE_ENDPOINT = "/autocomplete";
-const SUBMIT_RATING_ENDPOINT = "/submit_rating";
+const endpoints = {
+    API_BASE: "/api",
+    INITIAL_API_ENDPOINT: "/startup",
+    AUTOCOMPETE_ENDPOINT: "/autocomplete",
+    SUBMIT_RATING_ENDPOINT: "/submit_rating",
+    SPOT_ENDPOINT: "/spot",
+}
 
 const JSON_HEADERS = {
     'Accept': 'application/json',
@@ -31,18 +34,24 @@ function post(url, query = {}, data = {}) {
 }
 
 export function fetchInitialData() {
-    const url = `${API_BASE}${INITIAL_API_ENDPOINT}`;
+    const url = `${endpoints.API_BASE}${endpoints.INITIAL_API_ENDPOINT}`;
     return post(url);
 }
 
 export function getAutocompleteSuggestions(text_entered) {
-    const url = `${API_BASE}${AUTOCOMPETE_ENDPOINT}`;
+    const url = `${endpoints.API_BASE}${endpoints.AUTOCOMPETE_ENDPOINT}`;
     const data = {input: text_entered};
     return post(url, {}, data);
 }
 
+export function getSpotRatings(google_id) {
+    const url = `${endpoints.API_BASE}${endpoints.SPOT_ENDPOINT}`;
+    const data = {google_id};
+    return post(url, {}, data);
+}
+
 export function submitRating(spot, rating) {
-    const url = `${API_BASE}${SUBMIT_RATING_ENDPOINT}`;
+    const url = `${endpoints.API_BASE}${endpoints.SUBMIT_RATING_ENDPOINT}`;
     const data = {
         spot,
         rating,

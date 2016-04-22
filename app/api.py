@@ -2,6 +2,7 @@ import csv
 import requests
 import os
 import sys
+import traceback
 
 from app import app, db
 from models import Rating, Spot
@@ -24,42 +25,6 @@ if app.config['DEBUG']:
 else:
     api_keys['google'] = os.environ['GOOGLE_API_KEY']
 
-@app.route('/api/startup', methods=['POST'])
-def fetch_initial_data():
-    return jsonify(data)
-
-@app.route('/api/submit_rating', methods=['POST'])
-def submit_rating():
-    res_json = request.get_json()
-    spot = res_json.get('spot')
-    rating = res_json.get('rating')
-
-    try:
-        new_rating = Rating(
-            author = rating.get('author'),
-            score = rating.get('score'),
-            description = rating.get('description'),
-        )
-        existing_spot = Spot.query.where(google_id = spot.get('google_id'))
-        if existing_spot:
-            existing_spot.ratings.concat(new_rating)
-        else:
-            existing_spot = Spot(
-                name = spot.get('name'),
-                google_id = spot.get('google_id'),
-                ratings = [new_rating],
-        )
-
-        db.session.add_or_update(existing_spot)
-
-        db.session.add(new_rating) # drop this?
-        db.session.commit()
-        print "Successfully submitted rating"
-    except:
-        print "Failed to submit rating"
-        print str(sys.exc_info()[0])
-    return jsonify({})
-
 def fake_suggestion(name, id):
     return {
         "name": name,
@@ -76,13 +41,16 @@ def build_suggestion(prediction):
     return {
         "name": prediction['terms'][0]['value'],
         "description": prediction['description'],
-        "id": prediction['id'],
+        "google_id": prediction['place_id'],
     }
+
+@app.route('/api/startup', methods=['POST'])
+def fetch_initial_data():
+    return jsonify(data)
 
 @app.route('/api/autocomplete', methods=['POST'])
 def get_suggestions():
     inp = request.get_json().get('input')
-    return jsonify(build_fake_suggestions(inp))
     payload = {
         'input': request.get_json().get('input'),
         'key': api_keys['google'],
@@ -93,3 +61,50 @@ def get_suggestions():
     predictions = res.json().get('predictions')
     suggestions = map(build_suggestion, predictions)
     return jsonify({"suggestions": suggestions})
+
+@app.route('/api/spot', methods=['POST'])
+def get_spot_ratings():
+    req_json = request.get_json()
+    req_google_id = req_json.get('google_id')
+
+    result = {"ratings": []}
+    try:
+        existing_spot = db.session.query(Spot).filter_by(google_id = req_google_id).first()
+        if existing_spot:
+            result['ratings'] = [r.to_api_dict() for r in existing_spot.ratings]
+    except:
+        print "Failed to get spot ratings"
+        traceback.print_exc()
+
+    return jsonify(result)
+
+@app.route('/api/submit_rating', methods=['POST'])
+def submit_rating():
+    req_json = request.get_json()
+    spot = req_json.get('spot')
+    rating = req_json.get('rating')
+
+    try:
+        new_rating = Rating(
+            author = rating.get('author'),
+            score = rating.get('score'),
+            description = rating.get('description'),
+        )
+        existing_spot = db.session.query(Spot).filter_by(google_id = spot.get('google_id')).first()
+        if existing_spot:
+            existing_spot.update(ratings=existing_spot.ratings.append(new_rating))
+        else:
+            existing_spot = Spot(
+                name = spot.get('name'),
+                google_id = spot.get('google_id'),
+                ratings = [new_rating],
+            )
+            db.session.add(existing_spot)
+
+        db.session.commit()
+        print "Successfully submitted rating"
+    except:
+        print "Failed to submit rating"
+        traceback.print_exc()
+
+    return jsonify({})

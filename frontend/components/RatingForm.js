@@ -24,12 +24,6 @@ const Styles = {
         width: "60px",
         height: "30px",
     },
-    selectedAuthorButton: {
-        cursor: "pointer",
-        border: "3px solid red",
-        width: "60px",
-        height: "30px",
-    },
     description: {
         boxSizing: "border-box",
         width: "100%",
@@ -88,7 +82,10 @@ class RatingForm extends Component {
             rating,
         } = this.props;
 
-        console.log(this.props.rating);
+        const selectedAuthorStyle = {
+            ...Styles.authorButton,
+            border: "3px solid red",
+        };
 
         return (
             <div style={Styles.form}>
@@ -100,7 +97,7 @@ class RatingForm extends Component {
                         <div
                             key={i}
                             style={author === rating.author ?
-                                Styles.selectedAuthorButton : Styles.authorButton
+                                selectedAuthorStyle : Styles.authorButton
                             }
                             onClick={this.updateRatingAuthor.bind(this)}
                             >

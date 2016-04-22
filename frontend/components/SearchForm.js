@@ -15,6 +15,13 @@ export default class SearchForm extends Component {
         suggestions: PropTypes.array,
     };
 
+    handleSuggestionSelected(suggestion) {
+        const {yyActions} = this.props;
+
+        yyActions.suggestionSelected(suggestion);
+        yyActions.fetchSpotRatings(suggestion);
+    }
+
     render() {
         const {
             suggestions,
@@ -23,7 +30,7 @@ export default class SearchForm extends Component {
 
         const autocompleteProps = {
             suggestions,
-            onClick: yyActions.suggestionSelected,
+            onClick: this.handleSuggestionSelected.bind(this),
         };
 
         return (

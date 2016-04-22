@@ -3,10 +3,10 @@
 import {yyActions} from './yyActions';
 
 const initialState = {
-    ratings: [],
+    ratings: {},
     authors: [],
     selectedAuthor: "",
-    spot: {},
+    spot: null,
     suggestions: [],
     ratingBar: 0,
     rating: {
@@ -42,6 +42,11 @@ function YYReducer(state0 = initialState, action) {
                 ...state0,
                 suggestions: [],
                 spot: action.payload.suggestion,
+            };
+        case yyActions.RECEIVED_SPOT_RATINGS:
+            return {
+                ...state0,
+                ratings: action.payload.ratings || {},
             };
         case yyActions.UPDATE_RATING_BAR:
             return {

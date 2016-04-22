@@ -3,9 +3,9 @@ import 'babel-polyfill';
 import {yyActions} from './yyActions';
 import {
     getAutocompleteSuggestions,
+    getSpotRatings,
     submitRating,
 } from '../YYApi';
-
 
 function suggestionSelected({suggestion}) {
     return {
@@ -14,6 +14,25 @@ function suggestionSelected({suggestion}) {
             suggestion,
         },
     };
+}
+
+function fetchSpotRatings({suggestion}) {
+    return async function (dispatch) {
+        try {
+            const ratings = await getSpotRatings(suggestion.google_id);
+            dispatch({
+                type: yyActions.RECEIVED_SPOT_RATINGS,
+                payload: {
+                    ratings,
+                }
+            });
+
+        } catch (e) {
+            dispatch({
+                type: yyActions.RECEIVED_SPOT_RATINGS,
+            });
+        }
+    }
 }
 
 function updateRatingAuthor({author}) {
@@ -55,7 +74,7 @@ function updateRatingBar({score}) {
 function submitRatingForm({spot, rating}) {
     return async function (dispatch) {
         try {
-            const hey = await submitRating(spot, rating);
+            await submitRating(spot, rating);
             dispatch({
                 type: yyActions.SUBMIT_RATING_FORM_SUCCESS,
             });
@@ -97,6 +116,7 @@ function receivedAutocompleteSuggestions({suggestions}) {
 export const yyActionCreators = {
     submitRatingForm,
     suggestionSelected,
+    fetchSpotRatings,
     updateRatingBar,
     updateRatingAuthor,
     updateRatingScore,
