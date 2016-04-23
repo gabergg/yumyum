@@ -24,10 +24,6 @@ function YYReducer(state0 = initialState, action) {
             return {
                 ...state0,
                 authors: state0.authors.concat(action.payload.authors),
-                rating: {
-                    ...state0.rating,
-                    author: action.payload.authors[0],
-                },
             };
         case yyActions.AUTHOR_SELECTED:
             return {
@@ -40,9 +36,14 @@ function YYReducer(state0 = initialState, action) {
                 suggestions: action.payload.suggestions,
             };
         case yyActions.SUGGESTION_SELECTED:
+            const prevAuthors = state0.authors;
             return {
-                ...state0,
-                suggestions: [],
+                initialState,
+                rating: {
+                    ...initialState.rating,
+                    author: prevAuthors[0],
+                },
+                authors: prevAuthors,
                 spot: action.payload.suggestion,
             };
         case yyActions.CLEAR_AUTOCOMPLETE_SUGGESTIONS:

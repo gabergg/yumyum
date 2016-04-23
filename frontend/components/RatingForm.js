@@ -10,8 +10,11 @@ const Styles = {
         flexDirection: "column",
         marginTop: "-250px",
     },
-    spotName: {
+    formSection: {
         ...Style.flex1,
+        display: "flex",
+        justifyContent: "center",
+        margin: "10px 0",
         fontSize: "20px",
     },
     authors: {
@@ -95,44 +98,49 @@ class RatingForm extends Component {
             border: "3px solid red",
         };
 
+        const descriptionStyle = {
+            ...Styles.formSection,
+            ...Style.flex2,
+        };
+
         return (
             <div style={Styles.form}>
-                <div style={Styles.spotName}>
+                <div style={Styles.formSection}>
                     <span> {spot.name} </span>
                 </div>
-                <div style={Styles.authors}>
-                    {authors && authors.map((author, i) => (
-                        <div
-                            key={i}
-                            style={author === rating.author ?
-                                selectedAuthorStyle : Styles.authorButton
-                            }
-                            onClick={this.updateRatingAuthor.bind(this)}
-                            >
-                            {author}
-                        </div>
-                    ))}
-                </div>
-                <div>
-                    <div style={Styles.flex1}>
-                        <input
-                            type="range"
-                            min="0"
-                            max="5"
-                            step=".25"
-                            value={rating.score}
-                            onChange={this.updateRatingScore.bind(this)}
-                        />
-                        <label> {ratingBar} </label>
+                <div style={Styles.formSection}>
+                    <div style={Styles.authors}>
+                        {authors && authors.map((author, i) => (
+                            <div
+                                key={i}
+                                style={author === rating.author ?
+                                    selectedAuthorStyle : Styles.authorButton
+                                }
+                                onClick={this.updateRatingAuthor.bind(this)}
+                                >
+                                {author}
+                            </div>
+                        ))}
                     </div>
                 </div>
-                <div style={Style.flex3}>
+                <div style={Styles.formSection}>
+                    <input
+                        type="range"
+                        min="0"
+                        max="5"
+                        step=".25"
+                        value={rating.score}
+                        onChange={this.updateRatingScore.bind(this)}
+                    />
+                    <label> {ratingBar} </label>
+                </div>
+                <div style={descriptionStyle}>
                     <textarea
                         style={Styles.description}
                         onChange={this.updateRatingDescription.bind(this)}
                     />
                 </div>
-                <div style={Style.flex1}>
+                <div style={Styles.formSection}>
                     <button
                         style={Styles.submitButton}
                         onClick={this.submitRatingForm.bind(this)}
