@@ -5,6 +5,7 @@ import AutocompleteSuggestion from './AutocompleteSuggestion';
 
 const Styles = {
     autocomplete: {
+        display: "block",
         backgroundColor: "yellow",
     },
 };

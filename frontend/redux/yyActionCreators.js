@@ -16,6 +16,12 @@ function suggestionSelected({suggestion}) {
     };
 }
 
+function clearAutocompleteSuggestions() {
+    return {
+        type: yyActions.CLEAR_AUTOCOMPLETE_SUGGESTIONS,
+    };
+}
+
 function fetchSpotRatings({suggestion}) {
     return async function (dispatch) {
         try {
@@ -88,6 +94,11 @@ function submitRatingForm({spot, rating}) {
 }
 
 function fetchAutocompleteSuggestions({input}) {
+    if (input === "") {
+        return {
+            type: yyActions.CLEAR_AUTOCOMPLETE_SUGGESTIONS,
+        };
+    }
     return async function (dispatch) {
         try {
             const suggestions = await getAutocompleteSuggestions(input);
@@ -120,6 +131,7 @@ export const yyActionCreators = {
     updateRatingBar,
     updateRatingAuthor,
     updateRatingScore,
+    clearAutocompleteSuggestions,
     updateRatingDescription,
     fetchAutocompleteSuggestions,
     receivedAutocompleteSuggestions,

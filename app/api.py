@@ -29,7 +29,7 @@ def fake_suggestion(name, id):
     return {
         "name": name,
         "description": name + ", Tokyo, Japan",
-        "id": id,
+        "google_id": name,
     }
 
 def build_fake_suggestions(inp):
@@ -51,6 +51,7 @@ def fetch_initial_data():
 @app.route('/api/autocomplete', methods=['POST'])
 def get_suggestions():
     inp = request.get_json().get('input')
+    return jsonify(build_fake_suggestions(inp))
     payload = {
         'input': request.get_json().get('input'),
         'key': api_keys['google'],
@@ -92,8 +93,10 @@ def submit_rating():
         )
         existing_spot = db.session.query(Spot).filter_by(google_id = spot.get('google_id')).first()
         if existing_spot:
+            print "we have this spot already!"
             existing_spot.update(ratings=existing_spot.ratings.append(new_rating))
         else:
+            print "adding spot"
             existing_spot = Spot(
                 name = spot.get('name'),
                 google_id = spot.get('google_id'),

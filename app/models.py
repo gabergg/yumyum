@@ -32,7 +32,7 @@ class Rating(db.Model):
     __tablename__ = 'ratings'
 
     id = db.Column(db.Integer, primary_key=True)
-    score = db.Column(db.Integer())
+    score = db.Column(db.Float()) #make this a float
     description = db.Column(db.Text())
     author = db.Column(db.String(255))
     spot_id = db.Column(db.Integer, db.ForeignKey('spots.id'))

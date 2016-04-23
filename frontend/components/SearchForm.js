@@ -4,8 +4,19 @@ import AutocompleteDropdown from './AutocompleteDropdown';
 
 const Styles = {
     form: {
-        height: "300px",
-        backgroundColor: "green",
+        display: 'flex',
+        flexDirection: 'column',
+        height: "100%",
+        position: "relative",
+        zIndex: 1,
+    },
+    input: {
+        padding: '20px',
+        fontSize: '20px',
+    },
+    label: {
+        padding: '20px',
+        fontSize: '20px',
     },
 };
 
@@ -22,6 +33,10 @@ export default class SearchForm extends Component {
         yyActions.fetchSpotRatings(suggestion);
     }
 
+    handleInputClick(e) {
+        e.stopPropagation();
+    }
+
     render() {
         const {
             suggestions,
@@ -35,8 +50,12 @@ export default class SearchForm extends Component {
 
         return (
             <div style={Styles.form}>
-                <label> Wat restaurant broke da mouf? </label>
+                <label style={Styles.label}>
+                    Wat restaurant broke da mouf?
+                </label>
                 <input
+                    style={Styles.input}
+                    onClick={this.handleInputClick}
                     onKeyUp={(e) =>
                         yyActions.fetchAutocompleteSuggestions(
                             {

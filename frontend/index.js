@@ -21,12 +21,7 @@ function renderYumYum(data) {
 
     const ui = (
         <Provider store={YYStore}>
-            <div style={{
-                display: 'flex',
-                height: '100%',
-            }}>
-                <YYConnector/>
-            </div>
+            <YYConnector/>
         </Provider>
     );
 

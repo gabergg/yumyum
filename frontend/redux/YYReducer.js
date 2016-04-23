@@ -17,6 +17,8 @@ const initialState = {
 };
 
 function YYReducer(state0 = initialState, action) {
+    // keeps receiving autocomplete suggestions after select a spot
+    console.log(action.type);
     switch(action.type) {
         case yyActions.INITIAL_PAGE_LOAD:
             return {
@@ -42,6 +44,11 @@ function YYReducer(state0 = initialState, action) {
                 ...state0,
                 suggestions: [],
                 spot: action.payload.suggestion,
+            };
+        case yyActions.CLEAR_AUTOCOMPLETE_SUGGESTIONS:
+            return {
+                ...state0,
+                suggestions: [],
             };
         case yyActions.RECEIVED_SPOT_RATINGS:
             return {

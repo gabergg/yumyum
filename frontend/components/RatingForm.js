@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {map} from 'lodash/collection';
 import {debounce} from 'lodash/function';
+import {Style} from '../utils';
 
 const Styles = {
     form: {
@@ -8,15 +9,17 @@ const Styles = {
         height: "100%",
         display: "flex",
         flexDirection: "column",
+        marginTop: "-250px",
     },
-    formSection: {
-        height: "40px",
-        flex: 1,
-        textAlign: "center",
+    spotName: {
+        ...Style.flex1,
+        fontSize: "20px",
     },
     authors: {
+        ...Style.flex1,
+        display: "flex",
         flexDirection: "row",
-        width: "100%",
+        justifyContent: "space-around",
     },
     authorButton: {
         cursor: "pointer",
@@ -27,6 +30,12 @@ const Styles = {
     description: {
         boxSizing: "border-box",
         width: "100%",
+        height: "100px",
+    },
+    submitButton: {
+        width: "180px",
+        height: "67px",
+        fontSize: "20px",
     },
 };
 
@@ -89,7 +98,7 @@ class RatingForm extends Component {
 
         return (
             <div style={Styles.form}>
-                <div style={Styles.formSection}>
+                <div style={Styles.spotName}>
                     <span> {spot.name} </span>
                 </div>
                 <div style={Styles.authors}>
@@ -105,26 +114,28 @@ class RatingForm extends Component {
                         </div>
                     ))}
                 </div>
-                <div style={Styles.formSection}>
-                    <input
-                        type="range"
-                        min="0"
-                        max="5"
-                        step=".25"
-                        value={rating.score}
-                        onChange={this.updateRatingScore.bind(this)}
-                    />
-                    <label> {ratingBar} </label>
+                <div>
+                    <div style={Styles.flex1}>
+                        <input
+                            type="range"
+                            min="0"
+                            max="5"
+                            step=".25"
+                            value={rating.score}
+                            onChange={this.updateRatingScore.bind(this)}
+                        />
+                        <label> {ratingBar} </label>
+                    </div>
                 </div>
-                <div style={Styles.formSection}>
+                <div style={Style.flex3}>
                     <textarea
                         style={Styles.description}
                         onChange={this.updateRatingDescription.bind(this)}
                     />
                 </div>
-                <div style={Styles.formSection}>
+                <div style={Style.flex1}>
                     <button
-                        style={Styles.authors}
+                        style={Styles.submitButton}
                         onClick={this.submitRatingForm.bind(this)}
                     > Submit </button>
                 </div>

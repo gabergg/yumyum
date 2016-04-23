@@ -5,6 +5,7 @@ import YYBodyContainer from './YYBodyContainer'
 const Styles = {
     yumyum: {
         display: 'flex',
+        justifyContent: 'center',
     },
 }
 
@@ -15,8 +16,13 @@ class YumYum extends Component {
     }
 
     render() {
+        const {yyActions} = this.props;
+
         return (
-            <div style={Styles.yumyum}>
+            <div
+                style={Styles.yumyum}
+                onClick={yyActions.clearAutocompleteSuggestions}
+            >
                 <YYBodyContainer {...this.props}/>
             </div>
         );
