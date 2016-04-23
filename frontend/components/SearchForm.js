@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react';
+import {throttle} from 'lodash/function'; //Where to throttle this shit?
 
 import AutocompleteDropdown from './AutocompleteDropdown';
 
@@ -7,12 +8,11 @@ const Styles = {
         display: 'flex',
         flexDirection: 'column',
         height: "100%",
-        position: "relative",
-        zIndex: 1,
     },
     input: {
         padding: '20px',
         fontSize: '20px',
+        border: '1px solid black',
     },
     label: {
         padding: '20px',
@@ -58,9 +58,7 @@ export default class SearchForm extends Component {
                     onClick={this.handleInputClick}
                     onKeyUp={(e) =>
                         yyActions.fetchAutocompleteSuggestions(
-                            {
-                                input: e.target.value,
-                            }
+                            {input: e.target.value}
                         )}
                 />
                 { suggestions && (

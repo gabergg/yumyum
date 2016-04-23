@@ -1,6 +1,5 @@
 import React, {Component, PropTypes} from 'react';
 import {map} from 'lodash/collection';
-import {debounce} from 'lodash/function';
 import {Style} from '../utils';
 
 const Styles = {

@@ -3,6 +3,12 @@ import React, {PropTypes, Component} from 'react';
 const Styles = {
     suggestion: {
         border: "1px solid black",
+        padding: '20px',
+        fontSize: '20px',
+        textAlign: 'left',
+        position: "relative",
+        zIndex: 1,
+        backgroundColor: "white",
     },
 };
 
