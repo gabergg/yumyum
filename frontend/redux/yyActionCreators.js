@@ -26,6 +26,7 @@ function fetchSpotRatings({suggestion}) {
     return async function (dispatch) {
         try {
             const ratings = await getSpotRatings(suggestion.google_id);
+            console.log(ratings);
             dispatch({
                 type: yyActions.RECEIVED_SPOT_RATINGS,
                 payload: {
@@ -34,9 +35,10 @@ function fetchSpotRatings({suggestion}) {
             });
 
         } catch (e) {
-            dispatch({
-                type: yyActions.RECEIVED_SPOT_RATINGS,
-            });
+            console.log(e);
+            // dispatch({
+            //     type: yyActions.RECEIVED_SPOT_RATINGS,
+            // });
         }
     }
 }
@@ -115,15 +117,6 @@ function fetchAutocompleteSuggestions({input}) {
     }
 }
 
-function receivedAutocompleteSuggestions({suggestions}) {
-    return {
-        type: yyActions.RECEIVED_AUTOCOMPLETE_SUGGESTIONS,
-        payload: {
-            suggestions,
-        },
-    };
-}
-
 export const yyActionCreators = {
     submitRatingForm,
     suggestionSelected,
@@ -134,5 +127,4 @@ export const yyActionCreators = {
     clearAutocompleteSuggestions,
     updateRatingDescription,
     fetchAutocompleteSuggestions,
-    receivedAutocompleteSuggestions,
 };

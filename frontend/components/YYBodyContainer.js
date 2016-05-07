@@ -4,16 +4,18 @@ import RatingForm from './RatingForm';
 import SearchForm from './SearchForm';
 
 const Styles = {
+    header: {
+        textAlign: 'center',
+        color: 'white',
+    },
     bodyContainer: {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        width: '350px',
-        height: '600px',
-        backgroundColor: 'white',
+        maxWidth: '420px',
+        height: '555px',
         color: 'black',
         textAlign: 'center',
-        // border: '1px solid black',
     },
 };
 
@@ -26,13 +28,18 @@ class YYBodyContainer extends Component {
 
     render() {
         return (
-            <div style={Styles.bodyContainer}>
-                <SearchForm {...this.props}/>
-                {
-                    this.props.spot && (
-                        <RatingForm {...this.props}/>
-                    )
-                }
+            <div>
+                <div style={Styles.header}>
+                    <h1> YUMYUM </h1>
+                </div>
+                <div style={Styles.bodyContainer}>
+                    <SearchForm {...this.props}/>
+                    {
+                        this.props.spot && (
+                            <RatingForm {...this.props}/>
+                        )
+                    }
+                </div>
             </div>
         );
     }

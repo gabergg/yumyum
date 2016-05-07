@@ -68,16 +68,17 @@ def get_spot_ratings():
     req_json = request.get_json()
     req_google_id = req_json.get('google_id')
 
-    result = {"ratings": []}
+    ratings = {}
     try:
         existing_spot = db.session.query(Spot).filter_by(google_id = req_google_id).first()
         if existing_spot:
-            result['ratings'] = [r.to_api_dict() for r in existing_spot.ratings]
+            for r in existing_spot.ratings:
+                ratings[r.author] = r.to_api_dict()
     except:
         print "Failed to get spot ratings"
         traceback.print_exc()
 
-    return jsonify(result)
+    return jsonify(ratings)
 
 @app.route('/api/submit_rating', methods=['POST'])
 def submit_rating():
@@ -93,10 +94,9 @@ def submit_rating():
         )
         existing_spot = db.session.query(Spot).filter_by(google_id = spot.get('google_id')).first()
         if existing_spot:
-            print "we have this spot already!"
-            existing_spot.update(ratings=existing_spot.ratings.append(new_rating))
+            existing_spot.ratings.append(new_rating)
+            db.session.add(existing_spot)
         else:
-            print "adding spot"
             existing_spot = Spot(
                 name = spot.get('name'),
                 google_id = spot.get('google_id'),

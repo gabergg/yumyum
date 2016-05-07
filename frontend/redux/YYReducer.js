@@ -1,4 +1,4 @@
-//import update from 'react-addons-update'; ADD THIS
+//import update from 'react-addons-update'; add this?
 
 import {yyActions} from './yyActions';
 
@@ -17,8 +17,8 @@ const initialState = {
 };
 
 function YYReducer(state0 = initialState, action) {
+    console.log(action);
     // keeps receiving autocomplete suggestions after select a spot
-    console.log(action.type);
     switch(action.type) {
         case yyActions.INITIAL_PAGE_LOAD:
             return {

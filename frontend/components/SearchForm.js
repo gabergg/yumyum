@@ -8,6 +8,7 @@ const Styles = {
         display: 'flex',
         flexDirection: 'column',
         height: "100%",
+        background: 'transparent',
     },
     input: {
         padding: '20px',
@@ -17,6 +18,8 @@ const Styles = {
     label: {
         padding: '20px',
         fontSize: '20px',
+        color: 'white',
+        textTransform: 'uppercase',
     },
 };
 
@@ -37,6 +40,19 @@ export default class SearchForm extends Component {
         e.stopPropagation();
     }
 
+    handleInputKeyUp(e) {
+        const {yyActions} = this.props;
+        if(e.keyCode !== 27) {
+            yyActions.fetchAutocompleteSuggestions(
+                {input: e.target.value}
+            );
+        }
+    }
+
+    handleInputFocus(e) {
+        e.target.select();
+    }
+
     render() {
         const {
             suggestions,
@@ -54,12 +70,11 @@ export default class SearchForm extends Component {
                     Wat restaurant broke da mouf?
                 </label>
                 <input
+                    placeholder="e.g. house of pancakes"
                     style={Styles.input}
                     onClick={this.handleInputClick}
-                    onKeyUp={(e) =>
-                        yyActions.fetchAutocompleteSuggestions(
-                            {input: e.target.value}
-                        )}
+                    onKeyUp={this.handleInputKeyUp.bind(this)}
+                    onFocus={this.handleInputFocus}
                 />
                 { suggestions && (
                     <AutocompleteDropdown {...autocompleteProps}/>
