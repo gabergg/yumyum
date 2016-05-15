@@ -51,7 +51,6 @@ def fetch_initial_data():
 @app.route('/api/autocomplete', methods=['POST'])
 def get_suggestions():
     inp = request.get_json().get('input')
-    return jsonify(build_fake_suggestions(inp))
     payload = {
         'input': request.get_json().get('input'),
         'key': api_keys['google'],
